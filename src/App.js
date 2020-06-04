@@ -1,7 +1,9 @@
 import React from 'react';
 
-import logo from './logo.svg';
-import './App.css';
+import react from './assets/react.png';
+import electron from './assets/electron.png';
+
+import './App.scss';
 
 
 
@@ -12,7 +14,11 @@ const App = () => {
 
     <div className="App">
 
-      <img src={logo} className="App-logo" alt="logo" />
+      <img src={react} className="imgApp" alt='React Logo' width='200' height='200' />
+
+      <p>+</p>
+
+      <img src={electron} className="imgApp" alt='Electron Logo' width='200' height='200' />
 
     </div>
 

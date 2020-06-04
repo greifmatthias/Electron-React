@@ -7,14 +7,23 @@
   align-items: center;
   justify-content: center;
   background-color: #20232a;
+
+
+  .imgApp {
+
+    animation: App-logo-spin infinite 20s linear;
+  }
+
+
+  > p {
+
+    color: #FFFFFF;
+    font-size: 10rem;
+    margin: 5rem;
+  }
 }
 
 
-.App-logo {
-
-  animation: App-logo-spin infinite 20s linear;
-  height: 250px;
-}
 
 
 
