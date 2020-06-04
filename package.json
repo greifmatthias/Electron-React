@@ -3,19 +3,104 @@
   "version": "1.0.0",
   "private": true,
   "homepage": "./",
-  "main": "src/electron-starter.js",
+  "main": "public/electron.js",
+  "description": "Simple Electron React Sample",
+  "author": {
+    "name": "Greif Matthias",
+    "email": "greif.matthias@outlook.com"
+  },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "dev": "nf start -p 3000",
+    "react:build": "react-scripts build",
     "electron": "electron .",
-    "dev": "nf start -p 3000"
+    "postinstall": "electron-builder install-app-deps",
+    "electron-build": "npm run react:build && electron .",
+    "pack": "electron-builder --dir",
+    "build:mac": "electron-builder --mac",
+    "build:windows": "electron-builder --windows",
+    "build:linux": "electron-builder --linux",
+    "dist:mac": "npm run react:build && npm run build:mac",
+    "dist:windows": "npm run react:build && npm run build:windows",
+    "dist:linux": "npm run react:build && npm run build:linux",
+    "dist": "npm run react:build && npm run build:mac && npm run build:windows && npm run build:linux"
+  },
+  "build": {
+    "appId": "be.greifmatthias.electronreact",
+    "copyright": "Copyright © 2020 Greif Matthias",
+    "productName": "Electron-React",
+    "asar": true,
+    "directories": {
+      "output": "releases/${version}/${os}"
+    },
+    "mac": {
+      "icon": "dist/icon.icns",
+      "category": "Productivity",
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "dmg": {
+      "background": "dist/background.jpg",
+      "icon": "dist/icon.icns",
+      "iconSize": 100,
+      "contents": [
+        {
+          "x": 175,
+          "y": 200,
+          "type": "file"
+        },
+        {
+          "x": 475,
+          "y": 200,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ],
+      "window": {
+        "width": 650,
+        "height": 450
+      }
+    },
+    "linux": {
+      "category": "Util;GNOME;GTK",
+      "packageCategory": "GNOME;GTK",
+      "description": "Electron-React Sample",
+      "target": [
+        "deb",
+        "zip",
+        "AppImage"
+      ],
+      "maintainer": "Greif Matthias <greif.matthias@outlook.com>",
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "dist/icon.ico",
+      "publisherName": "Greif Matthias",
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "verifyUpdateCodeSignature": true
+    },
+    "nsis": {
+      "perMachine": true,
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": true
+    }
   },
   "dependencies": {
+    "node-sass": "4.14.1",
     "react": "16.13.1",
     "react-dom": "16.13.1"
   },
   "devDependencies": {
     "electron": "9.0.2",
+    "electron-builder": "22.7.0",
     "foreman": "3.0.1",
     "react-scripts": "3.4.1"
   },
