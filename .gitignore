@@ -88,3 +88,10 @@ typings/
 .dynamodb/
 
 .DS_Store
+
+# Exclude React production build
+build
+
+#Exclude generated Electron Releases
+releases
+package-lock.json
