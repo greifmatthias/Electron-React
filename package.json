@@ -23,7 +23,7 @@
     "dist:mac": "npm run react:build && npm run build:mac",
     "dist:windows": "npm run react:build && npm run build:windows",
     "dist:linux": "npm run react:build && npm run build:linux",
-    "dist": "npm run react:build && npm run build:mac && npm run build:windows && npm run build:linux",
+    "dist": "npm run react:build && npm run build:windows && npm run build:linux && npm run build:mac",
     "update": "npx npm-check-updates -u && npm i"
   },
   "build": {
@@ -95,15 +95,24 @@
     }
   },
   "dependencies": {
-    "node-sass": "5.0.0",
-    "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
   },
   "devDependencies": {
-    "electron": "11.2.3",
-    "electron-builder": "22.9.1",
+    "electron": "12.0.5",
+    "electron-builder": "22.10.5",
     "foreman": "3.0.1",
-    "react-scripts": "4.0.2"
+    "react-scripts": "4.0.3",
+    "@types/jest": "26.0.23",
+    "@types/node": "12.20.11",
+    "@types/react": "17.0.4",
+    "@types/react-dom": "17.0.3",
+    "typescript": "4.2.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
   },
   "browserslist": {
     "production": [

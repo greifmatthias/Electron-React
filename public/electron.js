@@ -1,66 +1,50 @@
-const { app, BrowserWindow } = require('electron');
-const url = require('url');
-const path = require('path');
+const { app, BrowserWindow } = require("electron");
+const path = require("path");
 
-
-
-const isMac = process.platform === 'darwin';
+const isMac = process.platform === "darwin";
 let isQuiting;
 
+let window;
 
+const init = () => {
+  const gotTheLock = app.requestSingleInstanceLock();
 
-class Application {
+  if (!gotTheLock) app.quit();
 
+  // Create window
+  window = new BrowserWindow({
+    width: 1200,
+    height: 800,
+    backgroundColor: "#FFFFFF",
+  });
 
-    window;
+  // Loadup app
+  const dir = path.join(__dirname, "../build/index.html");
+  const _URL = process.env.ELECTRON_START_URL || `file://${dir}`;
 
+  window.loadURL(_URL);
 
-    constructor() { }
+  // Subscribe when window is closing
+  window.on("close", (event) => {
+    if (isMac && !isQuiting) {
+      event.preventDefault();
+      window.minimize();
 
-
-
-    init = () => {
-
-        // Create window
-        this.window = new BrowserWindow({
-            width: 1200,
-            height: 800,
-            backgroundColor: '#FFFFFF'
-        });
-
-
-        // Loadup app
-        const _URL = process.env.ELECTRON_START_URL || url.format({
-            pathname: path.join(__dirname, '/../build/index.html'),
-            protocol: 'file:',
-            slashes: true
-        });
-
-        this.window.loadURL(_URL);
-
-
-        // Subscribe when window is closing
-        this.window.on('close', (event) => {
-            if (isMac && !isQuiting) {
-                event.preventDefault();
-                this.window.minimize();
-
-                return false;
-            }
-        });
-    };
-}
-
-
+      return false;
+    }
+  });
+};
 
 // Check if app quit is requested
-app.on('before-quit', () => isQuiting = true);
+app.on("before-quit", () => (isQuiting = true));
 
-
-
-// Init Application
-const application = new Application();
-
+// Trying to launch second instance; refocus
+app.on("second-instance", (event, commandLine, workingDirectory) => {
+  if (window) {
+    if (window.isMinimized()) window.restore();
+    window.focus();
+  }
+});
 
 // Startup when Electron is initialised
-app.whenReady().then(application.init);
+app.whenReady().then(init);
